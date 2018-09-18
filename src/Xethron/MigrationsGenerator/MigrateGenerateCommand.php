@@ -239,7 +239,14 @@ class MigrateGenerateCommand extends GeneratorCommand {
 
 		foreach ( $tables as $table ) {
 			$this->table = $table;
-			$this->migrationName = 'create_'. $this->table .'_table';
+			
+			$classNamePrefix = $this->option('classNamePrefix');
+			if (!$classNamePrefix) {
+				$this->migrationName = 'create_'. $this->table .'_table';
+			} else {
+				$this->migrationName = 'create_' . snake_case($classNamePrefix) . '_' . $this->table .'_table';
+			}
+			
 			$this->fields = $this->schemaGenerator->getFields( $this->table );
 
 			$this->generate();
@@ -367,6 +374,7 @@ class MigrateGenerateCommand extends GeneratorCommand {
 			['templatePath', 'tp', InputOption::VALUE_OPTIONAL, 'The location of the template for this generator'],
 			['defaultIndexNames', null, InputOption::VALUE_NONE, 'Don\'t use db index names for migrations'],
 			['defaultFKNames', null, InputOption::VALUE_NONE, 'Don\'t use db foreign key names for migrations'],
+			['classNamePrefix', null, InputOption::VALUE_OPTIONAL, 'Prefix migrations classes names to handle multiple table with the same name but different connection'],
 		];
 	}
 
