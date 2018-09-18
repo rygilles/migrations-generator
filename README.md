@@ -80,6 +80,9 @@ Check out Chung Tran's blog post for a quick step by step introduction: [Generat
 
 Changelog for Laravel Migrations Generator
 
+### 18 September 2018:
+* Rygilles : Add option --classNamePrefix to handle multiple tables with the same name on different connections
+
 ### 20 November 2016: v2.0.0
 * Support for Laravel 5
 
